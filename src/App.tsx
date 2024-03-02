@@ -4,9 +4,9 @@ import Konva from 'konva';
 
 function App() {
 //   const [file, setFile] = useState(''); // Store the image URL as a string
-  const fileInputRef = useRef(null); // Correctly initialized the ref with useRef
+  const fileInputRef =useRef<HTMLInputElement | null>(null);; // Correctly initialized the ref with useRef
   
-  const [file, setFile] = useState<string | undefined>();
+  //const [file, setFile] = useState<string | undefined>();
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [blurRadius, setBlurRadius] = useState(0);
 
@@ -14,6 +14,9 @@ function App() {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.onload = function (e) {
+        if (e.target === null) {
+          return;
+        }
         const img = new window.Image();
         img.src = e.target.result as string;
         img.onload = () => {
