@@ -10,26 +10,27 @@ function App() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [blurRadius, setBlurRadius] = useState(0);
   const [pixelSize, setPixelSize] = useState(0);
-  const [brightness, setBrightness] = useState(0);
-  const [contrast, setContrast] = useState(0);
-  const [embossBlend, setEmbossBlend] = useState(false);
-  const [enhance, setEnhance] = useState(0);
-  const [greyscale, setGreyscale] = useState(false);
-  const [hue, setHue] = useState(0);
-  const [noise, setNoise] = useState(0);
-  const [saturation, setSaturation] = useState(0);
-  const [sepia, setSepia] = useState(0);
-  const [value, setValue] = useState(0);
-  const [lightness, setLightness] = useState(0);
-  const [luminance, setLuminance] = useState(0);
-  const [red, setRed] = useState(0);
-  const [green, setGreen] = useState(0);
-  const [blue, setBlue] = useState(0);
-  const [invert, setInvert] = useState(false);
-  const [kaleidoscope, setKaleidoscope] = useState(0);
-  const [mask, setMask] = useState(0);
-  const [posterize, setPosterize] = useState(0);
-  const [threshold, setThreshold] = useState(0);
+  // const [brightness, setBrightness] = useState(0);
+  // const [contrast, setContrast] = useState(0);
+  // const [enhance, setEnhance] = useState(0);
+  // const [greyscale, setGreyscale] = useState(false);
+  // const [hue, setHue] = useState(0);
+  // const [noise, setNoise] = useState(0);
+  // const [saturation, setSaturation] = useState(0);
+  // const [sepia, setSepia] = useState(0);
+  // const [value, setValue] = useState(0);
+  // const [lightness, setLightness] = useState(0);
+  // const [luminance, setLuminance] = useState(0);
+  // const [red, setRed] = useState(0);
+  // const [green, setGreen] = useState(0);
+  // const [blue, setBlue] = useState(0);
+  // const [invert, setInvert] = useState(false);
+  // const [kaleidoscope, setKaleidoscope] = useState(0);
+  // const [mask, setMask] = useState(0);
+  // const [posterize, setPosterize] = useState(0);
+  // const [threshold, setThreshold] = useState(0);
+  // const [solarize, setSolarize] = useState(0);
+  // const [embossStrength, setEmbossStrength] = useState(0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -61,24 +62,26 @@ function App() {
 
       const konvaImage = new Konva.Image({
         image: image,
-        x: 0,
-        y: 0,
+        x: (stage.width() - 400) / 2,
+        y: (stage.height() - 400) / 2,
         width: 400,
         height: 400,
         blurRadius: blurRadius,
-        embossBlend: embossBlend,
-        enhance: enhance,
-        greyscale: greyscale,
-        noise: noise,
-        sepia: sepia,
-        lightness: lightness,
-        luminance: luminance,
-        invert: invert,
-        kaleidoscope: kaleidoscope,
-        mask: mask,
+        embossBlend: true,
+        embossDirection: 'top-left',
+        //embossStrength: embossStrength,
+        //enhance: enhance,
+        //greyscale: greyscale,
+        // noise: noise,
+        // sepia: sepia,
+        // lightness: lightness,
+        // luminance: luminance,
+        // invert: invert,
+        // kaleidoscope: kaleidoscope,
+        // mask: mask,
         pixelSize: pixelSize,
-        posterize: posterize,
-        threshold: threshold,
+        // posterize: posterize,
+        // threshold: threshold,
         draggable: false,
       });
 
@@ -89,8 +92,6 @@ function App() {
         Konva.Filters.Emboss,
         Konva.Filters.Enhance,
         Konva.Filters.Invert,
-        Konva.Filters.Kaleidoscope,
-        Konva.Filters.Mask,
         Konva.Filters.Noise,
         Konva.Filters.Posterize,
         Konva.Filters.Solarize,
