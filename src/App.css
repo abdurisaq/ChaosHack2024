@@ -5,6 +5,28 @@
   text-align: center;
 }
 
+.App {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: space-around; 
+  height: 100vh; 
+  padding: 2rem;
+  text-align: center;
+}
+
+#container{
+  width: 400px;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
+button{
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
