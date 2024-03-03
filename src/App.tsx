@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, ChangeEvent} from 'react'; // Removed unused useEffect, ChangeEvent
 import './App.css';
 import Konva from 'konva';
-
+import header from './assets/randepiction-removebg-preview.png';
 
 function App() {
 //   const [file, setFile] = useState(''); // Store the image URL as a string
@@ -285,6 +285,9 @@ function applyFilter() {
       <button id='filter' onClick={() => applyFilter()}>Apply Filter</button>
       <input type="number" value={numFilters} onChange={e => setNumFilters(Number(e.target.value))} />
       <button onClick={applyRandomFilters}>Apply Random Filters</button>
+      <div className='header'>
+      <img src={header} alt='header' />
+      </div>
     </div>
  );
 }

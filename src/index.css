@@ -7,10 +7,11 @@
   color: rgba(255, 255, 255, 0.87);
   position: absolute;
   left: 0;
-  width: fill-available;
+  width: 100%;
   bottom: 0;
-  height: fill-available;
+  height: auto;
   background-image: url('./assets/background.png');
+  background-size: fill;
   
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -37,7 +38,7 @@
   height: auto;
   background-size: cover;
   background-position: top center;
-  background-image: url('./assets/header-image.png'); 
+  background-image: url('./assets/to.png'); 
 }
 
 
