@@ -5,13 +5,41 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  position: absolute;
+  left: 0;
+  width: fill-available;
+  bottom: 0;
+  height: fill-available;
+  background-image: url('./assets/background.png');
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.background-imagetop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  background-position: top center;
+  background-image: url('./assets/top.png'); 
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  background-position: top center;
+  background-image: url('./assets/header-image.png'); 
+}
+
 
 a {
   font-weight: 500;
@@ -49,6 +77,12 @@ button {
 button:hover {
   border-color: #646cff;
 }
+
+.header-image {
+  width: 100%;
+  height: auto; 
+}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;

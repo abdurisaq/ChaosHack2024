@@ -7,51 +7,94 @@ function App() {
 //   const [file, setFile] = useState(''); // Store the image URL as a string
   const fileInputRef =useRef<HTMLInputElement | null>(null);; // Correctly initialized the ref with useRef
   const [selectedOption, setSelectedOption] = useState<string>('');
-  
-  //const [file, setFile] = useState<string | undefined>();
+  const [numFilters, setNumFilters] = useState(0);
+  const [aesthetic, setAesthetic] = useState<Aesthetic | null>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [blurRadius, setBlurRadius] = useState(0);
   const [pixelSize, setPixelSize] = useState(0);
-  // const [brightness, setBrightness] = useState(0);
+  const [brightness, setBrightness] = useState(0);
   const [contrast, setContrast] = useState(0);
-  // const [enhance, setEnhance] = useState(0);
-  // const [greyscale, setGreyscale] = useState(false);
-  // const [hue, setHue] = useState(0);
-  // const [noise, setNoise] = useState(0);
-  // const [saturation, setSaturation] = useState(0);
+  const [enhance, setEnhance] = useState(0);
+  const [greyscale, setGreyscale] = useState(false);
+  const [noise, setNoise] = useState(0);
+  const [saturation, setSaturation] = useState(0);
   const [sepia, setSepia] = useState(0);
-  // const [value, setValue] = useState(0);
-  // const [lightness, setLightness] = useState(0);
-  // const [luminance, setLuminance] = useState(0);
-  // const [invert, setInvert] = useState(false);
+  const [lightness, setLightness] = useState(0);
+  const [luminance, setLuminance] = useState(0);
+  const [invert, setInvert] = useState(false);
   const [kaleidoscope, setKaleidoscope] = useState(0);
-  // const [mask, setMask] = useState(0);
-  // const [posterize, setPosterize] = useState(0);
-  // const [threshold, setThreshold] = useState(0);
-  // const [solarize, setSolarize] = useState(0);
-  // const [embossStrength, setEmbossStrength] = useState(0);
+  const [mask, setMask] = useState(0);
+  const [posterize, setPosterize] = useState(0);
+  const [solarize, setSolarize] = useState(0);
+  const [embossStrength, setEmbossStrength] = useState(0);
   const Dictionaryvar: Record<string, any> = {
-    "Blur" : setBlurRadius,
-    "Pixelate" : setPixelSize,
-    "Sepia" : setSepia,
-    "Kaleidoscope" : setKaleidoscope,
-    "Contrast" : setContrast,
-    
-  };
-  const filterDictionary: Record<string, any> = {
+    "Blur": setBlurRadius,
+    "Pixelate": setPixelSize,
+    "Saturation": setSaturation,
+    //"Desaturation": setSaturation,
+    "Sepia": setSepia,
+    "Darken": setBrightness,
+    "Kaleidoscope": setKaleidoscope,
+    "Contrast": setContrast,
+    "Noise": setNoise,
+    "Solarize": setSolarize,
+    "Emboss": setEmbossStrength,
+    "Enhance": setEnhance,
+    "Greyscale": setGreyscale,
+    "Invert": setInvert,
+    "Lightness": setLightness,
+    "Luminance": setLuminance,
+    "Mask": setMask,
+    "Posterize": setPosterize,
+    "Saturated": setSaturation,
+
+};
+const filterDictionary: Record<string, any> = {
     "Blur": Konva.Filters.Blur,
     "Pixelate": Konva.Filters.Pixelate,
+    "Saturation": Konva.Filters.HSL,
+    //"Desaturation": Konva.Filters.HSL,
+    "Contrast": Konva.Filters.Contrast,
+    "Darken": Konva.Filters.Brighten,
     "Sepia": Konva.Filters.Sepia,
     "Kaleidoscope": Konva.Filters.Kaleidoscope,
+    "Noise": Konva.Filters.Noise,
+    "Solarize": Konva.Filters.Solarize,
+    "Emboss": Konva.Filters.Emboss,
+    "Enhance": Konva.Filters.Enhance,
+    "Greyscale": Konva.Filters.Grayscale,
+    "Invert": Konva.Filters.Invert,
+    "Lightness": Konva.Filters.HSL,
+    "Luminance": Konva.Filters.HSL,
+    "Mask": Konva.Filters.Mask,
+    "Posterize": Konva.Filters.Posterize,
+    "Saturated": Konva.Filters.HSL,
+
     // add more filters as needed
-  };
-  const filterTable: Record<string, number[]> = {
+};
+const filterTable: Record<string, number[]> = {
     "Blur": [0, 40],
     "Pixelate": [0, 10],
-    "Sepia": [0, 0],
-    "Kaleidoscope": [0, 0],
+    "Saturation": [3, 5],
+    //"Desaturation": [-3, 0],
+    "Contrast": [30, 50],
+    "Darken": [-20, -10],
+    "Sepia": [0, 100],
+    "Kaleidoscope": [0, 360],
+    "Noise": [0, 100],
+    "Solarize": [0, 100],
+    "Emboss": [0, 100],
+    "Enhance": [0, 100],
+    "Greyscale": [0, 1],
+    "Invert": [0, 1],
+    "Lightness": [0, 100],
+    "Luminance": [0, 100],
+    "Mask": [0, 100],
+    "Posterize": [0, 100],
+    "Saturated": [0, 100],
+
     // add more filters as needed
-  };
+};
   function filterMapper(filter: string) {
     return filterDictionary[filter];
   }
@@ -91,14 +134,22 @@ function App() {
         if(this.filterStrength[i] != 0) {
           console.log("filterStrength ", this.filterStrength[i]);
           console.log("I: ", i);
+          console.log("Filter: ", this.names[i]);
           Dictionaryvar[this.names[i]](Number(this.filterStrength[i]));
         }
       }
     }
-
   }
 
-  const blur = new Aesthetic(['Blur']);
+  // const blur = new Aesthetic(['Blur']);
+  // const tumblr = new Aesthetic(["Desaturate", "Contrast", 'Darken']);
+  // const gothic = new Aesthetic(["Desaturate", "Contrast", 'Darken']);
+  // const indie = new Aesthetic(["Desaturate", "Contrast", 'Darken']);
+  // const vintage = new Aesthetic(["Desaturate", "Contrast", 'Darken']);
+  // const nostalgia = new Aesthetic(["Desaturate", "Contrast", 'Darken']); 
+  // const chaos = new Aesthetic(["Desaturate", "Contrast", 'Darken']);
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -115,7 +166,26 @@ function App() {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
+  function applyRandomFilters() {
+    // Get all filter names
+    const allFilterNames = Object.keys(filterDictionary);
+  
+    // Generate an array of random filter names
+    const randomfilters = [];
+    for (let i = 0; i < numFilters; i++) {
+      const randomIndex = Math.floor(Math.random() * allFilterNames.length);
+      randomfilters.push(allFilterNames[randomIndex]);
+    }
+  
+    // Create an Aesthetic object with the random filter names
+    const newAesthetic = new Aesthetic(randomfilters);
+  
+    // Apply the filters
+    newAesthetic.applyFilters();
 
+    // Update the aesthetic state variable
+    setAesthetic(newAesthetic);
+  }
   useEffect(() => {
     if (image) {
       const stage = new Konva.Stage({
@@ -144,46 +214,36 @@ function App() {
         blurRadius: blurRadius,
         embossBlend: true,
         embossDirection: 'top-left',
-        //embossStrength: embossStrength,
-        //enhance: enhance,
-        //greyscale: greyscale,
-        //noise: noise,
+        embossStrength: embossStrength,
+        enhance: enhance,
+        greyscale: greyscale,
+        noise: noise,
         sepia: sepia,
-        //lightness: lightness,
-        //luminance: luminance,
-        //invert: invert,
+        lightness: lightness,
+        luminance: luminance,
+        invert: invert,
         kaleidoscope: kaleidoscope,
-        //mask: mask,
+        mask: mask,
         pixelSize: pixelSize,
-        //posterize: posterize,
-        //threshold: threshold,
+        posterize: posterize,
+        saturation: saturation,
+        solarize: solarize,
+        contrast: contrast,
+        brightness: brightness,
         draggable: false,
       });
 
       konvaImage.cache();
-      konvaImage.filters(blur.filters);
-      // konvaImage.filters([Konva.Filters.Contrast]);
-      // konvaImage.filters([Konva.Filters.Emboss]);
-      // konvaImage.filters([Konva.Filters.Enhance]);
-      // konvaImage.filters([Konva.Filters.HSL]);
-      // konvaImage.filters([Konva.Filters.RGB]);
-      // konvaImage.filters([Konva.Filters.Invert]);
-      // konvaImage.filters([Konva.Filters.Kaleidoscope]);
-      // konvaImage.filters([Konva.Filters.Mask]);
-      // konvaImage.filters([Konva.Filters.Noise]);
-      // konvaImage.filters([Konva.Filters.Posterize]);
-      // konvaImage.filters([Konva.Filters.HSV]);
-      // konvaImage.filters([Konva.Filters.Solarize]);
-      // konvaImage.filters([Konva.Filters.Pixelate]);
-      // konvaImage.filters([Konva.Filters.Sepia]);
-      // konvaImage.filters([Konva.Filters.Brighten]);
+      if(aesthetic)
+      konvaImage.filters(aesthetic.filters);
 
       layer.add(originalKonvaImage);
       layer.add(konvaImage);
       stage.add(layer);
-      blur.applyFilters();
+      if(aesthetic)
+      aesthetic.applyFilters();
     }
-  }, [image,blurRadius, pixelSize, sepia, kaleidoscope,  contrast]);
+  }, [image,aesthetic]);
 
 function applyFilter() {
   const newPixelSize = 10;
@@ -200,8 +260,6 @@ function applyFilter() {
   
   return (
     <div className="App">
-      <div className="background-image top"></div>
-      <div className="background-image bottom"></div>
       <div id="container"></div>
       <button type="button" onClick={() => fileInputRef.current && fileInputRef.current.click()}>
         Upload Image
@@ -225,6 +283,8 @@ function applyFilter() {
       </div>
 
       <button id='filter' onClick={() => applyFilter()}>Apply Filter</button>
+      <input type="number" value={numFilters} onChange={e => setNumFilters(Number(e.target.value))} />
+      <button onClick={applyRandomFilters}>Apply Random Filters</button>
     </div>
  );
 }
