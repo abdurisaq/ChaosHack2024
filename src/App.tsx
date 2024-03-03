@@ -200,17 +200,17 @@ const filterTable: Record<string, number[]> = {
       const originalKonvaImage = new Konva.Image({
         image: image,
         x: 0, // Positioned at the left side
-        y: (stage.height() - 400) / 2, // Centered vertically
-        width: 400,
-        height: 400,
+        y: 150, // Centered vertically
+        width: 350,
+        height: 350,
       });
 
       const konvaImage = new Konva.Image({
         image: image,
-        x: 400,
-        y: (stage.height() - 400) / 2,
-        width: 400,
-        height: 400,
+        x: 350,
+        y: 150,
+        width: 350,
+        height: 350,
         blurRadius: blurRadius,
         embossBlend: true,
         embossDirection: 'top-left',
